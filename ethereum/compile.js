@@ -7,7 +7,7 @@ fs.removeSync(buildPath);
 
 const contractsPath = path.resolve(__dirname, "contracts")
 const sourceFiles = fs.readdirSync(contractsPath);
-console.log(sourceFiles);
+// console.log(sourceFiles);
 
 let input = {
   language: 'Solidity',
@@ -28,26 +28,26 @@ let input = {
 
 for (const sourceName of sourceFiles) {
   const sourcePath = path.resolve(contractsPath, sourceName);
-  console.log(`sourcePath: ${sourcePath}`);
+  // console.log(`sourcePath: ${sourcePath}`);
   const source = fs.readFileSync(sourcePath, "utf8");
-  console.log(source);
+  // console.log(source);
   input.sources[sourceName] = {
     content: source
   }
 }
 
-console.log(input);  
+// console.log(input);  
   
 const output = JSON.parse(solc.compile(JSON.stringify(input)));
-console.log(output);
+// console.log(output);
 const sources = output['contracts'];
-console.log(sources);
+// console.log(sources);
   
 for (let source in sources) {
   const contract = sources[source]
   for (let name in contract) {
     const contractPath = path.resolve(buildPath, name + ".json");
-    console.log(contractPath);
+    console.log(`building ${contractPath} ...`);
     fs.outputJsonSync(
       contractPath,
       contract[name]['evm']
